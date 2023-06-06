@@ -1,19 +1,19 @@
 <%= form_with model: [ post, post.comments.build ] do |form| %>
   <div class="d-flex align-items-center">
-     <% if current_user.avatar.attached? %>
-     <div style= "width: 40px; height: 40px; margin-right:10px">
+    <% if current_user.avatar.attached? %>
     
+    <div style= "width: 40px; height: 40px; margin-right:10px">
     <%= image_tag current_user.avatar, style:"height:100%; width:100%; object-fit:cover", class:"rounded-circle" %>
-    
     </div>
-     <% else %>
-       <div style= "width: 40px; height: 40px; margin-right:10px">
+    
+    <% else %>
+      <div style= "width: 40px; height: 40px; margin-right:10px">
         <%= image_tag "/images/user.png", style:"height:100%; width:100%; object-fit:cover", class:"rounded-circle" %>
-        </div>
-            <% end %>
+      </div>
+    <% end %>
+    
     <%= form.text_field :comment%>
     <%= form.hidden_field :user_id, :value => current_user.id%>
- 
     <%= form.submit "Send", class:"btn btn-primary ms-2" %>
  
 <% end %>
