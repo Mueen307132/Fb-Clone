@@ -3,9 +3,7 @@ class PostsController < ApplicationController
   before_action :fetch_post, only: [:edit, :update, :destroy]
   
   def index
-    # @posts = Post.all
     @posts = Post.order(created_at: :desc).page params[:page]
-
   end
   
   def new
@@ -13,11 +11,15 @@ class PostsController < ApplicationController
   end
   
   def create 
+    puts params[:data]
     @post = current_user.posts.create(post_params)
-    if @post.save
-      redirect_to :root
-    else
-      render :new, status: :unprocessable_entity
+
+    # respond_to do |format|  
+    #   format.js { render 'posts/create', status: :created}
+    # end  
+    respond_to do |format|
+      # format.html {redirect_to :root}
+      format.js
     end
   end
 

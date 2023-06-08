@@ -1,9 +1,8 @@
-<%= form_with model: post do |form| %>
+<%= form_for post, remote: true, format: :js do |form| %>
  <div class="d-flex justify-content-center">
     <div class="card my-3" style="width: 500px">
   
     <div class="card-body">
-     
      <div class="d-flex align-items-center">
      <% if current_user.avatar.attached? %>
      <div style= "width: 40px; height: 40px; margin-right:10px">
@@ -22,16 +21,20 @@
     </div>
   <div>
     <%= form.text_area :body , class:"w-100" %>
+    <%if post%>
     <% post.errors.full_messages_for(:body).each do |message| %>
       <div><%= message %></div>
+    <% end %>
     <% end %>
   </div>
 
   <div class="mt-4">
     <%= form.label "Please Attach Images", class:"form-label"%><br>
     <%= form.file_field :image, class:"form-control" %><br>
+    <%if post%>
     <% post.errors.full_messages_for(:image).each do |message| %>
       <div><%= message %></div>
+    <% end %>
     <% end %>
   </div>
 

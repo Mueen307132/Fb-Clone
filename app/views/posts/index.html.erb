@@ -1,6 +1,12 @@
 <div class="container">
 
-<%= link_to "Create new Post", new_post_path, class:"d-flex justify-content-center" %>
+<div class="create-new-post" data-controller="posts" data-action="click->posts#test"> 
+Create
+</div>
+
+
+<div id="post-form"></div>
+
 <ul class="posts">
   <% @posts.each do |post| %>
     <li class="d-flex justify-content-center"  style="">
@@ -41,22 +47,22 @@
     <div class="d-flex justify-content-around">
       
       <% current_user_like = post.likes.find_by_user_id(current_user.id) %>
-      <% if current_user_like.present? %>
-        
-          <i class="fa-solid fa-thumbs-up unlike" id="unlike_<%= post.id%>"  data-post-id="<%= post.id%>" data-like-id="<%= current_user_like.id%>"></i>
- 
-          <% else %>
-      <i class="fa-solid fa-thumbs-up like" style="color:black " id="like_<%= post.id%>" data-post-id="<%= post.id%>"></i>
-     
       
+      <%= link_to 'javascript:void(0)', { class: "#{'d-none' if current_user_like.blank?}" } do%>
+        <i class="fa-solid fa-thumbs-down unlike" id="unlike_<%= post.id%>"  data-post-id="<%= post.id%>" data-like-id="<%= current_user_like&.id%>"></i>
       <% end %>
+      
+      <%= link_to 'javascript:void(0)', { class:"#{'d-none' if current_user_like.present?}" } do%>
+        <i class="fa-regular fa-thumbs-up like" id="like_<%= post.id%>" data-post-id="<%= post.id%>"></i>
+      <% end %>
+
      <i class="fa-regular fa-comment comments-button"  data-post-id="<%= post.id%>"></i>
      </div>
      <div id="comments_post_<%= post.id%>" style="display:none">
      <%= render "comment/show", post:post %>
     </div>
     </div>
-   
+
     </li>
     <li class="post-edit-class" id="edit_id_<%= post.id%>" style="display:none">
      <%= render  "edit"  , post: post %>

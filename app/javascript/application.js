@@ -18,45 +18,62 @@ $(function () {
     $(`#comments_post_${id}`).toggle();
   });
   $(".like").on("click", function (e) {
+    e.preventDefault();
     var id = $(this).data("post-id");
-    debugger;
     $.ajax({
       url: `/posts/${id}/likes`,
       type: "POST",
       data: { post_id: id },
-      success: function () {
-        $(`#like_${id}`).hide();
-        $(`#unlike_${id}`).show();
+      success: function (response) {
+        console.log(response, id);
+        $(`#like_${id}`).parent().addClass("d-none");
+        $(`#unlike_${id}`).parent().removeClass("d-none");
+        $(`#unlike_${id}`).data("like-id", response.id);
       },
     });
   });
   $(".unlike").on("click", async function (e) {
+    e.preventDefault();
     var post_id = $(this).data("post-id");
     var id = $(this).data("like-id");
-    debugger;
     $.ajax({
       url: `/posts/${post_id}/likes/${id}`,
       type: "DELETE",
 
       data: { post_id: post_id, id: id },
       success: function () {
-        $(`#like_${id}`).show();
-        $(`#unlike_${id}`).hide();
+        console.log(post_id);
+        $(`#like_${post_id}`).parent().removeClass("d-none");
+        $(`#unlike_${post_id}`).parent().addClass("d-none");
       },
     });
   });
   $(".delete-post").on("click", async function (e) {
     var id = $(this).data("post-id");
-    console.log(id);
-    debugger;
     $.ajax({
       url: `/posts/${id}`,
       type: "DELETE",
       data: { id: id },
       success: function () {
-        console.log("HI");
         $(`#post_${id}`).hide();
       },
     });
   });
+
+  // $("#create_post").on("submit", function (event) {
+  //   event.preventDefault();
+  //   debugger;
+  //   var formData = $(this).serialize();
+  //   $.ajax({
+  //     url: "/posts.js",
+  //     method: "POST",
+  //     data: formData,
+  //     dataType: "script",
+  //     success: function (response) {
+  //       debugger;
+  //       console.log("RESPONSE FOUND");
+  //     },
+  //     error: function (xhr, status, error) {},
+  //   });
+  // });
 });
