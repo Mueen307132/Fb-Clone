@@ -11,23 +11,14 @@ class PostsController < ApplicationController
   end
   
   def create 
-    puts params[:data]
     @post = current_user.posts.create(post_params)
-
-    # respond_to do |format|  
-    #   format.js { render 'posts/create', status: :created}
-    # end  
-    respond_to do |format|
-      # format.html {redirect_to :root}
-      format.js
-    end
+    redirect_to :root
   end
 
   def show; end
   
   def destroy
     @post.destroy
-    redirect_to :root
   end
 
   def edit; end

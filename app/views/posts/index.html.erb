@@ -1,75 +1,18 @@
 <div class="container">
-
-<div class="create-new-post" data-controller="posts" data-action="click->posts#test"> 
-Create
-</div>
-
-
-<div id="post-form"></div>
-
-<ul class="posts">
-  <% @posts.each do |post| %>
-    <li class="d-flex justify-content-center"  style="">
-    <div class="card my-3" id="post_<%= post.id%>" style="width: 500px">
-  
-    <div class="card-body">
-     
-     <div class="d-flex align-items-center">
-     <% if post.user.avatar.attached? %>
-     <div style= "width: 40px; height: 40px; margin-right:10px">
+  <div class="create-new-post" data-controller="posts" data-action="click->posts#create">
+    Create
+  </div>
+  <div id="post-form"></div>
+  <ul class="posts">
+    <% @posts.each do |post| %>
+    <%= render "show", post:post%>
     
-    <%= image_tag post.user.avatar, style:"height:100%; width:100%; object-fit:cover", class:"rounded-circle" %>
-    
-    </div>
-     <% else %>
-       <div style= "width: 40px; height: 40px; margin-right:10px">
-        <%= image_tag "/images/user.png", style:"height:100%; width:100%; object-fit:cover", class:"rounded-circle" %>
-        </div>
-            <% end %>
-    <div class="card-title fw-bold">
-    <%= post.user.username  %>
-    </div>
-    <% if post.user_id == current_user.id%>
-
-<i class="fa-solid fa-pen-to-square ms-auto edit-button-class" id="edit-post_<%= post.id%>" data-post-id="<%= post.id%>"></i>
-      <%= button_to   do %>
-                  <i class="fa-solid fa-trash delete-post" data-post-id="<%= post.id%>"></i>
-                  <%end  %>
-    <% end %>
-    </div>
-    <div class="card-text">
-    <%= post.body  %>
-    </div>
-    </div>
-    <% if post.image.attached? %>
-    <%= image_tag post.image, style:"height:100%; width:100%; object-fit:cover", class:"card-img-top" %>
-    <% end %>
-    <div class="d-flex justify-content-around">
-      
-      <% current_user_like = post.likes.find_by_user_id(current_user.id) %>
-      
-      <%= link_to 'javascript:void(0)', { class: "#{'d-none' if current_user_like.blank?}" } do%>
-        <i class="fa-solid fa-thumbs-down unlike" id="unlike_<%= post.id%>"  data-post-id="<%= post.id%>" data-like-id="<%= current_user_like&.id%>"></i>
-      <% end %>
-      
-      <%= link_to 'javascript:void(0)', { class:"#{'d-none' if current_user_like.present?}" } do%>
-        <i class="fa-regular fa-thumbs-up like" id="like_<%= post.id%>" data-post-id="<%= post.id%>"></i>
-      <% end %>
-
-     <i class="fa-regular fa-comment comments-button"  data-post-id="<%= post.id%>"></i>
-     </div>
-     <div id="comments_post_<%= post.id%>" style="display:none">
-     <%= render "comment/show", post:post %>
-    </div>
-    </div>
-
+    <li id="edit_id_<%= post.id%>" style="display:none">
+      <%= render  "edit"  , post: post %>
     </li>
-    <li class="post-edit-class" id="edit_id_<%= post.id%>" style="display:none">
-     <%= render  "edit"  , post: post %>
-    </li>
-  <% end %>
-</ul>
-<div class="d-flex justify-content-center">
-<%= paginate @posts%>
-</div>
+    <% end %>
+  </ul>
+  <div class="d-flex justify-content-center">
+    <%= paginate @posts%>
+  </div>
 </div>
