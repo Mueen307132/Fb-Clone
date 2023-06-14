@@ -45,8 +45,10 @@
       <% end %>
       <i class="fa-regular fa-comment comments-button" data-controller="posts" data-action="click->posts#comments" data-posts-my-value="<%= post.id%>"></i>
     </div>
-    <div id="comments_post_<%= post.id%>" style="display:none">
-      <%= render "comment/show", post:post %>
-    </div>
+    <div id="comments_post_<%= post.id%>" style="display:none" data-controller="comments" data-target="comments.commentList">
+    <div id="comments_new_post_<%= post.id%>">
+      <%= render post.comments %>
+      </div>
+    <%= render "comments/create", post:post %>    </div>
   </div>
 </li>

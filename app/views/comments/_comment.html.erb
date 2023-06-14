@@ -1,5 +1,4 @@
-<% post.comments.each do |comment| %>
-  <div class="d-flex align-items-center">
+ <div class="d-flex align-items-center" >
      <% if comment.user.avatar.attached? %>
      <div style= "width: 40px; height: 40px; margin-right:10px">
     
@@ -15,5 +14,3 @@
     <%= comment.comment %> 
     </p>
     </div>
-<% end %>
-     <%= render "comment/comment", post:post %>

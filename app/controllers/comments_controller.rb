@@ -1,9 +1,17 @@
 class CommentsController < ApplicationController
 
   def create
+    puts "Hello #{params} test"
     @post = Post.find(params[:post_id])
     @comment = @post.comments.create(comment_params)
-    redirect_to :root
+    data ={
+      comment:@comment,
+      user:@comment.user,
+      user_avatar:@comment.user.avatar
+    }
+    respond_to do |format|
+      format.json { render json: data.to_json, status: 200}
+    end
   end
 
   def destroy 

@@ -8,37 +8,38 @@
           
           <%= image_tag current_user.avatar, style:"height:100%; width:100%; object-fit:cover", class:"rounded-circle" %>
           
-          >
-          <div style= "width: 40px; height: 40px; margin-right:10px">
-            <%= image_tag "/images/user.png", style:"height:100%; width:100%; object-fit:cover", class:"rounded-circle" %>
-          </div>
-          <% end %>
-          <div class="card-title fw-bold">
-            <%= current_user.username  %>
-          </div>
         </div>
-        <div>
-          <%= form.text_area :body , class:"w-100" %>
-          <%if post%>
-          <% post.errors.full_messages_for(:body).each do |message| %>
-          <div><%= message %></div>
-          <% end %>
-          <% end %>
-        </div>
-        <div class="mt-4">
-          <%= form.label "Please Attach Images", class:"form-label"%><br>
-          <%= form.file_field :image, class:"form-control" %><br>
-          <%if post%>
-          <% post.errors.full_messages_for(:image).each do |message| %>
-          <div><%= message %></div>
-          <% end %>
-          <% end %>
-        </div>
-        <div>
-          <%= form.submit class:"btn btn-primary" %>
+        <% else %>
+        <div style= "width: 40px; height: 40px; margin-right:10px">
+          <%= image_tag "/images/user.png", style:"height:100%; width:100%; object-fit:cover", class:"rounded-circle" %>
         </div>
         <% end %>
+        <div class="card-title fw-bold">
+          <%= current_user.username  %>
+        </div>
       </div>
+      <div>
+        <%= form.text_area :body , class:"w-100" %>
+        <%if post%>
+        <% post.errors.full_messages_for(:body).each do |message| %>
+        <div><%= message %></div>
+        <% end %>
+        <% end %>
+      </div>
+      <div class="mt-4">
+        <%= form.label "Please Attach Images", class:"form-label"%><br>
+        <%= form.file_field :image, class:"form-control" %><br>
+        <%if post%>
+        <% post.errors.full_messages_for(:image).each do |message| %>
+        <div><%= message %></div>
+        <% end %>
+        <% end %>
+      </div>
+      <div>
+        <%= form.submit class:"btn btn-primary" %>
+      </div>
+      <% end %>
     </div>
-    
   </div>
+  
+</div>
