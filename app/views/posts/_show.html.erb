@@ -21,7 +21,7 @@
         <% if post.user_id == current_user.id%>
         <i class="fa-solid fa-pen-to-square ms-auto" data-controller="posts" data-action="click->posts#edit" data-posts-post-id="<%= post.id%>"></i>
         <%= link_to 'javascript:void(0)' do %>
-        <i class="fa-solid fa-trash" data-controller="posts" data-action="click->posts#delete" data-posts-post-id="<%= post.id%>"></i>
+        <i class="fa-solid fa-trash mx-2" data-controller="posts" data-action="click->posts#delete" data-posts-post-id="<%= post.id%>"></i>
         <%end  %>
         <% end %>
       </div>
@@ -33,21 +33,23 @@
     <%= image_tag post.image, style:"height:100%; width:100%; object-fit:cover", class:"card-img-top" %>
     <% end %>
     <div class="d-flex justify-content-around">
-      
-      <% current_user_like = post.likes.find_by_user_id(current_user.id) %>
-      
-      <%= link_to 'javascript:void(0)', { class: "#{'d-none' if current_user_like.blank?}" } do%>
-      <i class="fa-solid fa-thumbs-down unlike" id="unlike_<%= post.id%>" data-controller="likes" data-action="click->likes#unlike" data-likes-post-id="<%= post.id%>" data-likes-id="<%= current_user_like&.id%>"></i>
-      <% end %>
-      
-      <%= link_to 'javascript:void(0)', { class:"#{'d-none' if current_user_like.present?}" } do%>
-      <i class="fa-regular fa-thumbs-up like" data-controller="likes" data-action="click->likes#like" id="like_<%= post.id%>" data-likes-post-id="<%= post.id%>"></i>
-      <% end %>
+      <div>
+        <% current_user_like = post.likes.find_by_user_id(current_user.id) %>
+        
+        <%= link_to 'javascript:void(0)', { class: "#{'d-none' if current_user_like.blank?}" } do%>
+        <i class="fa-solid fa-thumbs-up unlike" style="color:blue" id="unlike_<%= post.id%>" data-controller="likes" data-action="click->likes#unlike" data-likes-post-id="<%= post.id%>" data-likes-id="<%= current_user_like&.id%>"></i>
+        <% end %>
+        
+        <%= link_to 'javascript:void(0)', { class:"#{'d-none' if current_user_like.present?}" } do%>
+        <i class="fa-regular fa-thumbs-up like" data-controller="likes" data-action="click->likes#like" id="like_<%= post.id%>" data-likes-post-id="<%= post.id%>"></i>
+        <% end %>
+        <%= post.likes.count%>
+      </div>
       <i class="fa-regular fa-comment comments-button" data-controller="posts" data-action="click->posts#comments" data-posts-my-value="<%= post.id%>"></i>
     </div>
     <div id="comments_post_<%= post.id%>" style="display:none" data-controller="comments" data-target="comments.commentList">
-    <div id="comments_new_post_<%= post.id%>">
-      <%= render post.comments %>
+      <div id="comments_new_post_<%= post.id%>">
+        <%= render post.comments, post:post %>
       </div>
     <%= render "comments/create", post:post %>    </div>
   </div>

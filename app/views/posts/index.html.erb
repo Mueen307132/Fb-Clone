@@ -1,9 +1,9 @@
 <div class="container">
-  <div class="create-new-post" data-controller="posts" data-action="click->posts#create">
+  <div class="create-new-post custom-btn mx-auto" data-controller="posts" data-action="click->posts#create">
     Create
   </div>
   <div id="post-form"></div>
-  <ul class="posts">
+  <ul class="posts p-0">
     <% @posts.each do |post| %>
     <%= render "show", post:post%>
     

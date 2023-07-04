@@ -1,18 +1,26 @@
 class PostsController < ApplicationController
 
   before_action :fetch_post, only: [:edit, :update, :destroy]
+  # before_action :verify_params, only: [:create,:update]
   
   def index
     @posts = Post.order(created_at: :desc).page params[:page]
   end
   
   def new
-    @post = Post.new
+    @post = current_user.posts.new
   end
   
   def create 
     @post = current_user.posts.create(post_params)
-    redirect_to :root
+    if @post.save
+      redirect_to :root
+    else 
+      flash.now[:notice] = "HELLo"
+      puts "HELOOOO#{@post.errors.full_messages_for(:image)}"
+      
+    end
+
   end
 
   def show; end
@@ -39,5 +47,14 @@ class PostsController < ApplicationController
   
   def post_params
     params.require(:post).permit(:body, :image)
+  end
+  
+  def verify_params
+    puts "#{params[:post][:body]}TESTING VERIFICATION"
+    if params[:post][:body].presence do
+      errors.add(:body,'Write something MF')
+    end
+    
+    end
   end
 end

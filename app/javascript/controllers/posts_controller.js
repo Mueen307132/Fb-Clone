@@ -38,4 +38,8 @@ export default class extends Controller {
     $(`#edit_id_${id}`).show();
     $(`#post_${id}`).hide();
   }
+
+  cancel() {
+    $("#post-form").html("");
+  }
 }

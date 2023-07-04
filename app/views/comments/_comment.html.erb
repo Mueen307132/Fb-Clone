@@ -1,16 +1,55 @@
- <div class="d-flex align-items-center" >
-     <% if comment.user.avatar.attached? %>
-     <div style= "width: 40px; height: 40px; margin-right:10px">
-    
-    <%= image_tag comment.user.avatar, style:"height:100%; width:100%; object-fit:cover", class:"rounded-circle" %>
-    
-    </div>
-     <% else %>
-       <div style= "width: 40px; height: 40px; margin-right:10px">
-        <%= image_tag "/images/user.png", style:"height:100%; width:100%; object-fit:cover", class:"rounded-circle" %>
+<div  >
+    <%unless comment.comment_id.present?%>
+    <div class="d-flex align-items-center px-3 mb-2">
+        <% if comment.user.avatar.attached? %>
+        <div style= "width: 40px; height: 40px; margin-right:10px">
+            
+            <%= image_tag comment.user.avatar, style:"height:100%; width:100%; object-fit:cover", class:"rounded-circle" %>
+            
         </div>
-            <% end %>
-    <p>
-    <%= comment.comment %> 
-    </p>
+        <% else %>
+        <div style= "width: 40px; height: 40px; margin-right:10px">
+            <%= image_tag "/images/user.png", style:"height:100%; width:100%; object-fit:cover", class:"rounded-circle" %>
+        </div>
+        <% end %>
+        <div class="d-flex align-items-center justify-content-between" style="width: calc(100% - 50px)">
+            <p>
+                <%= comment.body %>
+            </p>
+            <div>
+                <i class="fa-regular fa-thumbs-up like mx-3" data-controller="likes" data-action="click->likes#like" id="like_<%= post.id%>" data-likes-post-id="<%= post.id%>"></i>
+                <i class="fa fa-reply" data-controller="comments" data-action="click->comments#reply" data-comments-id="<%= comment.id%>" data-comments-user="<%= comment.user.username%>" data-comments-post-id="<%= post.id%>" id="reply_icon_<%=comment.id%>"></i>
+            </div>
+        </div>
     </div>
+    
+    <div id="reply_container_<%=comment.id%>">
+    <% comment.replies.each do |reply|%>
+    <div class="d-flex align-items-center px-3 ms-5 mb-3" >
+        <% if reply.user.avatar.attached? %>
+        <div style= "width: 40px; height: 40px; margin-right:10px">
+            
+            <%= image_tag reply.user.avatar, style:"height:100%; width:100%; object-fit:cover", class:"rounded-circle" %>
+            
+        </div>
+        <% else %>
+        <div style= "width: 40px; height: 40px; margin-right:10px">
+            <%= image_tag "/images/user.png", style:"height:100%; width:100%; object-fit:cover", class:"rounded-circle" %>
+        </div>
+        <% end %>
+        <div class="d-flex align-items-center justify-content-between" style="width: calc(100% - 50px)">
+            <p>
+                <%= reply.body %>
+            </p>
+            <div>
+            <i class="fa-regular fa-thumbs-up like mx-3" data-controller="likes" data-action="click->likes#like" id="like_<%= post.id%>" data-likes-post-id="<%= post.id%>"></i>
+
+            <i class="fa fa-reply" data-controller="comments" data-action="click->comments#reply" data-comments-id="<%= comment.id%>" data-comments-reply="<%= reply.id%>" data-comments-user="<%= reply.user.username%>" data-comments-post-id="<%= post.id%>" id="reply_icon_<%=reply.id%>"></i>
+        </div>
+        </div>
+    </div>
+    <% end %>
+     </div>
+    <% end %>
+    
+</div>

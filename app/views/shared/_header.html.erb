@@ -1,4 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<div >
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="position:sticky; top:0; z-index:1;" >
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -6,7 +7,6 @@
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav">
-      
         <li class="nav-item">
           <% if user_signed_in? %>
             Welcome <strong><%= current_user.username %></strong>.
@@ -37,12 +37,18 @@
  
     </div>
   </div>
+ 
 </nav>
-     <% if notice %>
-  <p class="alert alert-success"><%= notice %></p>
-<% end %>
-<% if alert %>
-  <p class="alert alert-danger"><%= alert %></p>
-<% end %>
-<p class="navbar-text float-right">
-</p>
+<div class="modal-wrapper" style="">
+  <div class="modal-inner">
+  </div>  
+  </div>
+    <% if notice %>
+      <p class="alert alert-success"><%= notice %></p>
+    <% end %>
+    <% if alert %>
+      <p class="alert alert-danger"><%= alert %></p>
+    <% end %>
+  <p class="navbar-text float-right">
+  </p>
+ 

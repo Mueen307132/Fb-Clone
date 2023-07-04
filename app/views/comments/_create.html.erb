@@ -1,19 +1,17 @@
 <%= form_with model: [ post, post.comments.build ],data:{controller:"comments", action:"comments#create","comments-id":post.id} do |form| %>
-  <div class="d-flex align-items-center">
-    <% if current_user.avatar.attached? %>
-    
-    <div style= "width: 40px; height: 40px; margin-right:10px">
+<div class="d-flex align-items-center px-3 mb-2">
+  <% if current_user.avatar.attached? %>
+  <div style= "width: 40px; height: 40px; margin-right:10px">
     <%= image_tag current_user.avatar, style:"height:100%; width:100%; object-fit:cover", class:"rounded-circle" %>
-    </div>
-    
-    <% else %>
-      <div style= "width: 40px; height: 40px; margin-right:10px">
-        <%= image_tag "/images/user.png", style:"height:100%; width:100%; object-fit:cover", class:"rounded-circle" %>
-      </div>
-    <% end %>
-    
-    <%= form.text_field :comment,data: { 'comments-target' => 'comment' }%>
-    <%= form.hidden_field :user_id, :value => current_user.id,data: { 'comments-target' => 'user' }%>
-    <%= form.submit "Send", class:"btn btn-primary ms-2" %>
- 
-<% end %>
+  </div>
+  <% else %>
+  <div style= "width: 40px; height: 40px; margin-right:10px">
+    <%= image_tag "/images/user.png", style:"height:100%; width:100%; object-fit:cover", class:"rounded-circle" %>
+  </div>
+  <% end %>
+  <div id="comment_reply_<%= post.id%>" data-comments-comment-id="" data-comments-reply-id=""></div>
+  <%= form.text_field :body,data: { 'comments-target' => 'comment' }, id: "comment_data_#{post.id}"%>
+  <%= form.hidden_field :user_id, :value => current_user.id,data: { 'comments-target' => 'user' }%>
+  <%= form.submit "Send", class:"btn btn-primary ms-2" %>
+  <button class="btn btn-danger" id= "cancel_button_<%= post.id%>" data-action="comments#cancelReply" style="display:none">Cancel</button>
+  <% end %>
